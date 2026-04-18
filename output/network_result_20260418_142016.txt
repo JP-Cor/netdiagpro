@@ -1,0 +1,74 @@
+
+Configuraci¢n IP de Windows
+
+   Nombre de host. . . . . . . . . : DESKTOP-CPDF0OF
+   Sufijo DNS principal  . . . . . : 
+   Tipo de nodo. . . . . . . . . . : h¡brido
+   Enrutamiento IP habilitado. . . : no
+   Proxy WINS habilitado . . . . . : no
+
+Adaptador de Ethernet Ethernet 3:
+
+   Estado de los medios. . . . . . . . . . . : medios desconectados
+   Sufijo DNS espec¡fico para la conexi¢n. . : 
+   Descripci¢n . . . . . . . . . . . . . . . : Realtek PCIe GbE Family Controller
+   Direcci¢n f¡sica. . . . . . . . . . . . . : 78-55-36-01-FE-9C
+   DHCP habilitado . . . . . . . . . . . . . : s¡
+   Configuraci¢n autom tica habilitada . . . : s¡
+
+Adaptador de Ethernet Ethernet 4:
+
+   Sufijo DNS espec¡fico para la conexi¢n. . : 
+   Descripci¢n . . . . . . . . . . . . . . . : Realtek PCIe GbE Family Controller #2
+   Direcci¢n f¡sica. . . . . . . . . . . . . : 78-55-36-01-FE-9D
+   DHCP habilitado . . . . . . . . . . . . . : s¡
+   Configuraci¢n autom tica habilitada . . . : s¡
+   V¡nculo: direcci¢n IPv6 local. . . : fe80::8758:38e0:cd86:c60b%22(Preferido) 
+   Direcci¢n IPv4. . . . . . . . . . . . . . : 192.168.68.61(Preferido) 
+   M scara de subred . . . . . . . . . . . . : 255.255.252.0
+   Concesi¢n obtenida. . . . . . . . . . . . : s bado, 18 de abril de 2026 01:48:12
+   La concesi¢n expira . . . . . . . . . . . : s bado, 18 de abril de 2026 03:48:11
+   Puerta de enlace predeterminada . . . . . : fe80::3268:93ff:fe73:af19%22
+                                       192.168.68.1
+   Servidor DHCP . . . . . . . . . . . . . . : 192.168.68.1
+   IAID DHCPv6 . . . . . . . . . . . . . . . : 360207670
+   DUID de cliente DHCPv6. . . . . . . . . . : 00-01-00-01-31-5D-5A-83-78-55-36-01-FE-9C
+   Servidores DNS. . . . . . . . . . . . . . : 192.168.100.1
+                                       192.168.68.1
+   NetBIOS sobre TCP/IP. . . . . . . . . . . : habilitado
+
+Adaptador de LAN inal mbrica Wi-Fi:
+
+   Estado de los medios. . . . . . . . . . . : medios desconectados
+   Sufijo DNS espec¡fico para la conexi¢n. . : 
+   Descripci¢n . . . . . . . . . . . . . . . : Intel(R) Wi-Fi 6 AX200 160MHz
+   Direcci¢n f¡sica. . . . . . . . . . . . . : EC-4C-8C-C8-73-00
+   DHCP habilitado . . . . . . . . . . . . . : s¡
+   Configuraci¢n autom tica habilitada . . . : s¡
+
+Adaptador de LAN inal mbrica Conexi¢n de  rea local* 1:
+
+   Estado de los medios. . . . . . . . . . . : medios desconectados
+   Sufijo DNS espec¡fico para la conexi¢n. . : 
+   Descripci¢n . . . . . . . . . . . . . . . : Microsoft Wi-Fi Direct Virtual Adapter
+   Direcci¢n f¡sica. . . . . . . . . . . . . : EC-4C-8C-C8-73-01
+   DHCP habilitado . . . . . . . . . . . . . : s¡
+   Configuraci¢n autom tica habilitada . . . : s¡
+
+Adaptador de LAN inal mbrica Conexi¢n de  rea local* 2:
+
+   Estado de los medios. . . . . . . . . . . : medios desconectados
+   Sufijo DNS espec¡fico para la conexi¢n. . : 
+   Descripci¢n . . . . . . . . . . . . . . . : Microsoft Wi-Fi Direct Virtual Adapter #2
+   Direcci¢n f¡sica. . . . . . . . . . . . . : EE-4C-8C-C8-73-00
+   DHCP habilitado . . . . . . . . . . . . . : s¡
+   Configuraci¢n autom tica habilitada . . . : s¡
+
+Adaptador de Ethernet Conexi¢n de red Bluetooth:
+
+   Estado de los medios. . . . . . . . . . . : medios desconectados
+   Sufijo DNS espec¡fico para la conexi¢n. . : 
+   Descripci¢n . . . . . . . . . . . . . . . : Bluetooth Device (Personal Area Network)
+   Direcci¢n f¡sica. . . . . . . . . . . . . : EC-4C-8C-C8-73-04
+   DHCP habilitado . . . . . . . . . . . . . : s¡
+   Configuraci¢n autom tica habilitada . . . : s¡

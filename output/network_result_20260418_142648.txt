@@ -1,0 +1,18 @@
+
+Haciendo ping a www.google.com [142.251.150.119] con 17 bytes de datos:
+Respuesta desde 142.251.150.119: bytes=17 tiempo=70ms TTL=117
+Respuesta desde 142.251.150.119: bytes=17 tiempo=70ms TTL=117
+Respuesta desde 142.251.150.119: bytes=17 tiempo=70ms TTL=117
+Respuesta desde 142.251.150.119: bytes=17 tiempo=69ms TTL=117
+Respuesta desde 142.251.150.119: bytes=17 tiempo=69ms TTL=117
+Respuesta desde 142.251.150.119: bytes=17 tiempo=69ms TTL=117
+Respuesta desde 142.251.150.119: bytes=17 tiempo=70ms TTL=117
+Respuesta desde 142.251.150.119: bytes=17 tiempo=70ms TTL=117
+Respuesta desde 142.251.150.119: bytes=17 tiempo=70ms TTL=117
+Respuesta desde 142.251.150.119: bytes=17 tiempo=70ms TTL=117
+
+Estad¡sticas de ping para 142.251.150.119:
+    Paquetes: enviados = 10, recibidos = 10, perdidos = 0
+    (0% perdidos),
+Tiempos aproximados de ida y vuelta en milisegundos:
+    M¡nimo = 69ms, M ximo = 70ms, Media = 69ms
