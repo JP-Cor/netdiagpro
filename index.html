@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NetDiagPro | Diagnóstico de Red para Windows</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --bg-soft: #121a2b;
+      --card: rgba(255,255,255,0.08);
+      --card-border: rgba(255,255,255,0.12);
+      --text: #eaf2ff;
+      --muted: #a8b3c7;
+      --primary: #3b82f6;
+      --primary-2: #2563eb;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(59,130,246,0.18), transparent 25%),
+        radial-gradient(circle at bottom left, rgba(34,197,94,0.12), transparent 20%),
+        var(--bg);
+      color: var(--text);
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(11, 18, 32, 0.72);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+
+    .brand-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--success));
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow);
+      font-size: 20px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 22px;
+      border-radius: 16px;
+      font-weight: 700;
+      transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.1);
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 72px 0 48px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(59,130,246,0.12);
+      color: #cfe1ff;
+      border: 1px solid rgba(59,130,246,0.18);
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      line-height: 1.02;
+      margin: 0 0 18px;
+      letter-spacing: -1.2px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.7;
+      max-width: 680px;
+      margin: 0 0 26px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .window-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+    }
+
+    .dot.red { background: #ff5f57; }
+    .dot.yellow { background: #febc2e; }
+    .dot.green { background: #28c840; }
+
+    .mock-shell {
+      background: rgba(6, 10, 18, 0.92);
+      border-radius: 22px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      min-height: 380px;
+    }
+
+    .mock-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      gap: 12px;
+    }
+
+    .mock-title {
+      font-weight: 700;
+      color: #dce9ff;
+    }
+
+    .status {
+      font-size: 12px;
+      color: #9fe7b4;
+      padding: 6px 10px;
+      background: rgba(34,197,94,0.12);
+      border-radius: 999px;
+      border: 1px solid rgba(34,197,94,0.18);
+    }
+
+    .progress-wrap {
+      margin: 16px 0;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .progress-track {
+      height: 12px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      width: 78%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--success), #4ade80);
+      border-radius: 999px;
+    }
+
+    .mock-output {
+      margin-top: 18px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 18px;
+      padding: 16px;
+      color: #bfe3c9;
+      font-family: Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      white-space: pre-line;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    section {
+      padding: 24px 0 70px;
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      margin: 0 0 12px;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      margin: 0 auto;
+      max-width: 760px;
+      line-height: 1.7;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .step-number {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(59,130,246,0.18);
+      color: #dbeafe;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .cta {
+      padding-bottom: 88px;
+    }
+
+    .cta-box {
+      background: linear-gradient(135deg, rgba(37,99,235,0.22), rgba(34,197,94,0.14));
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 30px;
+      padding: 34px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .cta-box h2 {
+      margin: 0 0 12px;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+    }
+
+    .cta-box p {
+      color: var(--muted);
+      max-width: 700px;
+      margin: 0 auto 22px;
+      line-height: 1.7;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      color: var(--muted);
+      font-size: 14px;
+      padding: 22px 0 34px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .grid-3,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <div class="brand-badge">📡</div>
+        <div>NetDiagPro</div>
+      </div>
+      <div class="nav-links">
+        <a href="#funciones">Funciones</a>
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#descargar">Descargar</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="hero-tag">Herramienta de diagnóstico de red para Windows</div>
+        <h1>Diagnostica tu conexión sin complicarte.</h1>
+        <p>
+          NetDiagPro te permite ejecutar pruebas de ping, ver saltos de red, generar archivos TXT con resultados y obtener información completa de la tarjeta de red desde una interfaz simple, moderna y lista para usar.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://github.com/TU-USUARIO/TU-REPO/releases" target="_blank">⬇ Descargar ahora</a>
+          <a class="btn btn-secondary" href="#funciones">Ver funciones</a>
+        </div>
+        <div class="hero-meta">
+          <span>✔ Archivo portable</span>
+          <span>✔ Resultados en TXT</span>
+          <span>✔ Ideal para soporte y pruebas</span>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="window-bar">
+          <div class="dot red"></div>
+          <div class="dot yellow"></div>
+          <div class="dot green"></div>
+        </div>
+        <div class="mock-shell">
+          <div class="mock-top">
+            <div class="mock-title">NetDiagPro.exe</div>
+            <div class="status">Ping activo</div>
+          </div>
+
+          <div class="progress-wrap">
+            <div class="progress-label">
+              <span>Progreso</span>
+              <span>78%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-bar"></div>
+            </div>
+          </div>
+
+          <div class="mock-output">Haciendo ping a www.google.com con 32 bytes de datos:
+Respuesta desde 142.250.190.4: bytes=32 tiempo=42ms TTL=117
+Respuesta desde 142.250.190.4: bytes=32 tiempo=39ms TTL=117
+Respuesta desde 142.250.190.4: bytes=32 tiempo=41ms TTL=117
+
+Resultado guardado en: Descargas\ping_www_google_com_20260418_160522.txt</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="funciones">
+    <div class="container">
+      <div class="section-head">
+        <h2>Todo lo importante en una sola app</h2>
+        <p>Diseñada para usuarios que quieren revisar su red rápido, guardar evidencia y tener una herramienta clara para soporte técnico o pruebas personales.</p>
+      </div>
+
+      <div class="grid-3">
+        <article class="card">
+          <div class="card-icon">📶</div>
+          <h3>Ping configurable</h3>
+          <p>Define dominio, cantidad de pings y tamaño del paquete para medir latencia, estabilidad y respuesta de red de forma sencilla.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">🛰️</div>
+          <h3>Traceroute y saltos</h3>
+          <p>Visualiza el recorrido que sigue la conexión hasta su destino para detectar rutas lentas, bloqueos o puntos problemáticos.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">📝</div>
+          <h3>Exportación automática</h3>
+          <p>Guarda resultados en archivos TXT dentro de Descargas y ábrelos con un clic para compartirlos o archivarlos fácilmente.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">🖥️</div>
+          <h3>Info completa de red</h3>
+          <p>Genera un archivo con información detallada de adaptadores, direcciones IP, DNS, MAC y más datos útiles del sistema.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">⏹️</div>
+          <h3>Detener procesos</h3>
+          <p>Incluye botón para detener pruebas en curso y mantener la app bajo control cuando una consulta tarda demasiado.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">🎯</div>
+          <h3>Interfaz clara</h3>
+          <p>Una experiencia simple, visual y directa, pensada para que cualquier usuario la entienda sin complicarse con comandos.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="como-funciona">
+    <div class="container">
+      <div class="section-head">
+        <h2>Cómo funciona</h2>
+        <p>La descarga es rápida y el uso también. No necesitas abrir consola ni recordar comandos largos.</p>
+      </div>
+
+      <div class="steps">
+        <article class="card">
+          <div class="step-number">1</div>
+          <h3>Descarga la app</h3>
+          <p>Baja el archivo desde GitHub Releases y descomprime el ZIP en tu computadora.</p>
+        </article>
+
+        <article class="card">
+          <div class="step-number">2</div>
+          <h3>Abre NetDiagPro</h3>
+          <p>Ejecuta el archivo y entra a una interfaz lista para hacer pruebas de red en segundos.</p>
+        </article>
+
+        <article class="card">
+          <div class="step-number">3</div>
+          <h3>Realiza el diagnóstico</h3>
+          <p>Usa ping, traceroute o genera el informe completo de red según lo que necesites revisar.</p>
+        </article>
+
+        <article class="card">
+          <div class="step-number">4</div>
+          <h3>Guarda y comparte</h3>
+          <p>Exporta resultados en TXT para soporte técnico, respaldo o evidencia de pruebas.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="descargar">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Descarga NetDiagPro y prueba tu red con estilo</h2>
+        <p>
+          Una solución práctica para usuarios, técnicos o estudiantes que necesitan analizar conectividad, guardar resultados y trabajar con una interfaz más cómoda que la consola tradicional.
+        </p>
+        <a class="btn btn-primary" href="https://github.com/JP-Cor/netdiagpro/releases" target="_blank">Descargar última versión</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© 2026 NetDiagPro</div>
+      <div>Hecho para Windows • Descarga desde GitHub Releases</div>
+    </div>
+  </footer>
+</body>
+</html>
